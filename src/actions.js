@@ -27,3 +27,9 @@ export function calculate() {
         type    : 'CALCULATE',
     }
 }
+
+export function clearAll() {
+    return {
+        type    : 'CLEAR_ALL',
+    }
+}
