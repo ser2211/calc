@@ -5,7 +5,7 @@ import MyCalc from "./container";
 import { Provider, connect } from "react-redux";
 import { myCalculator } from "./reducer";
 import { createStore, bindActionCreators } from "redux";
-import { digit, operator, calculate } from './actions';
+import { digit, operator, calculate, clearAll } from './actions';
 
 
 const store = createStore(myCalculator, {
@@ -117,7 +117,7 @@ const AppComponent = (props) => (
             <div id='num1' style={styles1}>{props.num1}</div>
             <div id='op' style={opers} id='op'>{props.oper}</div>
             <div id='num2' style={styles1}>{props.num2}</div>
-            <div style={txt}>=</div>
+            <div style={txt} onClick={() => props.calculate()}>=</div>
             <div id='rslt' style={styles3}>{props.rslt}</div>
         </div>
         <div style={row_of_btns}>
@@ -147,6 +147,12 @@ const AppComponent = (props) => (
             <div style={empt}></div>
             <button style={oper} onClick={() => props.operator("*")} id="multiply">*</button>
         </div>
+        <div style={row_of_btns}>
+            <button style={style_of_point} onClick={() => props.clearAll()} id="reset">C</button>
+            <div style={empt}></div>
+            <div style={empt}></div>
+            <button style={style_of_point} onClick={() => props.calculate()} id="calculate">=</button>
+        </div>
     </div>
 );
 
@@ -165,6 +171,7 @@ function mapDispatchToProps(dispatch) {
         digit: digit,
         operator: operator,
         calculate: calculate,
+        clearAll: clearAll,
     }, dispatch)
 }
 
@@ -183,3 +190,59 @@ ReactDOM.render(
     </Provider>,
     document.getElementById('root'),
 );
+document.addEventListener("keydown", (event)=> {
+    console.log(event);
+    let newKey = event.key;
+    switch (newKey) {
+        case '1':
+            store.dispatch(digit(1));
+            break;
+        case '2':
+            store.dispatch(digit(2));
+            break;
+        case '3':
+            store.dispatch(digit(3));
+            break;
+        case '4':
+            store.dispatch(digit(4));
+            break;
+        case '5':
+            store.dispatch(digit(5));
+            break;
+        case '6':
+            store.dispatch(digit(6));
+            break;
+        case '7':
+            store.dispatch(digit(7));
+            break;
+        case '8':
+            store.dispatch(digit(8));
+            break;
+        case '9':
+            store.dispatch(digit(9));
+            break;
+        case '0':
+            store.dispatch(digit(0));
+            break;
+        case '+':
+            store.dispatch(operator('+'));
+            break;
+        case '-':
+            store.dispatch(operator('-'));
+            break;
+        case '*':
+            store.dispatch(operator('*'));
+            break;
+        case '/':
+            store.dispatch(operator('/'));
+            break;
+        case 'Enter':
+            store.dispatch(calculate());
+            break;
+        case 'Escape':
+            store.dispatch(clearAll())
+            break;
+        default:
+            break;
+}
+});

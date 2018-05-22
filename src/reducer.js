@@ -35,7 +35,7 @@ export var myCalculator = function(state, action) {
             };
             return state;
         case 'CALCULATE':
-            console.log('I have to calculate!');
+            //console.log('I have to calculate!');
             var op = state.oper;
             var num1 = state.num1;
             var num2 = state.num2;
@@ -44,9 +44,22 @@ export var myCalculator = function(state, action) {
                 case '+':
                     rslt = num1 + num2;
                     break;
+                case '-':
+                    rslt = num1 - num2;
+                    break;
+                case '*':
+                    rslt = num1 * num2;
+                    break;
+                case '/':
+                    if (num2 === 0) {
+                        rslt = 'Деление на 0!';
+                    }
+                    else {
+                        rslt = num1 / num2;
+                    };
+                    break;
                 default:
                     rslt = 0;
-                    break;
             }
             state = {
                 ...state,
@@ -60,6 +73,7 @@ export var myCalculator = function(state, action) {
                 op   : "",
                 rslt : 0,
             }
+            break;
         default:
     }
     return state;
