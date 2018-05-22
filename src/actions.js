@@ -33,3 +33,9 @@ export function clearAll() {
         type    : 'CLEAR_ALL',
     }
 }
+
+export function dot() {
+    return {
+        type    : 'DOT',
+    }
+}

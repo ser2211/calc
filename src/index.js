@@ -5,14 +5,14 @@ import MyCalc from "./container";
 import { Provider, connect } from "react-redux";
 import { myCalculator } from "./reducer";
 import { createStore, bindActionCreators } from "redux";
-import { digit, operator, calculate, clearAll } from './actions';
+import { digit, operator, calculate, clearAll, dot } from './actions';
 
 
 const store = createStore(myCalculator, {
-    num1: 0,
-    num2: 0,
+    num1: "",
+    num2: "",
     oper: "",
-    rslt: 0,
+    rslt: "",
 });
 
 
@@ -142,7 +142,7 @@ const AppComponent = (props) => (
             <button style={oper} onClick={() => props.operator("/")} id="divide">/</button>
         </div>
         <div style={row_of_btns}>
-            <button style={style_of_point} id="point">.</button>
+            <button style={style_of_point} onClick={() => props.dot()} id="point">.</button>
             <button style={btns} onClick={() => props.digit(0)} id="0">0</button>
             <div style={empt}></div>
             <button style={oper} onClick={() => props.operator("*")} id="multiply">*</button>
@@ -172,6 +172,7 @@ function mapDispatchToProps(dispatch) {
         operator: operator,
         calculate: calculate,
         clearAll: clearAll,
+        dot: dot,
     }, dispatch)
 }
 
@@ -195,34 +196,34 @@ document.addEventListener("keydown", (event)=> {
     let newKey = event.key;
     switch (newKey) {
         case '1':
-            store.dispatch(digit(1));
+            store.dispatch(digit('1'));
             break;
         case '2':
-            store.dispatch(digit(2));
+            store.dispatch(digit('2'));
             break;
         case '3':
-            store.dispatch(digit(3));
+            store.dispatch(digit('3'));
             break;
         case '4':
-            store.dispatch(digit(4));
+            store.dispatch(digit('4'));
             break;
         case '5':
-            store.dispatch(digit(5));
+            store.dispatch(digit('5'));
             break;
         case '6':
-            store.dispatch(digit(6));
+            store.dispatch(digit('6'));
             break;
         case '7':
-            store.dispatch(digit(7));
+            store.dispatch(digit('7'));
             break;
         case '8':
-            store.dispatch(digit(8));
+            store.dispatch(digit('8'));
             break;
         case '9':
-            store.dispatch(digit(9));
+            store.dispatch(digit('9'));
             break;
         case '0':
-            store.dispatch(digit(0));
+            store.dispatch(digit('0'));
             break;
         case '+':
             store.dispatch(operator('+'));
@@ -241,6 +242,10 @@ document.addEventListener("keydown", (event)=> {
             break;
         case 'Escape':
             store.dispatch(clearAll())
+            break;
+        case ',':
+        case '.':
+            store.dispatch(dot());
             break;
         default:
             break;

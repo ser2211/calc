@@ -14,11 +14,11 @@ export var myCalculator = function(state, action) {
             var num = action.num;
             console.log('You enter digit - ' + num);
             if (state.oper) {
-                num1 = state.num1;
-                num2 = state.num2 * 10 + num;
+                num1 = '' + state.num1;
+                num2 = '' + state.num2 + num;
             } else {
-                num1 = state.num1 * 10 + num;
-                num2 = state.num2;
+                num1 = '' + state.num1 + num;
+                num2 = '' + state.num2;
             }
             state = {
                 ...state,
@@ -34,11 +34,35 @@ export var myCalculator = function(state, action) {
                 oper : op,
             };
             return state;
+        case 'DOT':
+            if (state.oper) {
+                num1 = '' + state.num1;
+                if (!~state.num2.indexOf('.')) {
+                    num2 = '' + state.num2 + '.';
+                }
+                else {
+                    num2 = '' + state.num2;
+                }
+            } else {
+                if (!~state.num1.indexOf('.')) {
+                    num1 = '' + state.num1 + '.';
+                }
+                else {
+                    num2 = '' + state.num2;
+                }
+                num2 = '' + state.num2;
+            }
+            state = {
+                ...state,
+                num1 : num1,
+                num2 : num2,
+            };
+            return state;
         case 'CALCULATE':
             //console.log('I have to calculate!');
             var op = state.oper;
-            var num1 = state.num1;
-            var num2 = state.num2;
+            var num1 = parseFloat(state.num1);
+            var num2 = parseFloat(state.num2);
             var rslt = 0;
             switch (op) {
                 case '+':
@@ -59,7 +83,7 @@ export var myCalculator = function(state, action) {
                     };
                     break;
                 default:
-                    rslt = 0;
+                    rslt = "";
             }
             state = {
                 ...state,
@@ -68,10 +92,10 @@ export var myCalculator = function(state, action) {
             return state;
         case 'CLEAR_ALL':
             state = {
-                num1 : 0,
-                num2 : 0,
+                num1 : "",
+                num2 : "",
                 op   : "",
-                rslt : 0,
+                rslt : "",
             }
             break;
         default:
